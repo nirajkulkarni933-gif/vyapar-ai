@@ -2,8 +2,8 @@ from flask import Flask, request, jsonify, render_template_string
 from google import genai
 
 app = Flask(__name__)
-client = genai.Client(api_key="AQ.Ab8RN6KuBE4e_KO13zSIdwa7-1mUZW1QIr88SYtHQGgUGt5hsw")
-
+import os
+client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 HTML = '''
 <!DOCTYPE html>
 <html lang="en">
