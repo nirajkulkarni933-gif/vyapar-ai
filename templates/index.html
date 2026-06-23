@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VyaparAI - India's #1 AI Marketing Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --purple: #7c3aed;
+            --blue: #2563eb;
+            --cyan: #06b6d4;
+            --pink: #ec4899;
+            --dark: #030712;
+            --dark2: #0f0f1a;
+            --card: rgba(255,255,255,0.03);
+            --border: rgba(255,255,255,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* ── BACKGROUND ── */
+        .bg-mesh {
+            position: fixed; inset: 0; z-index: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 0%, rgba(124,58,237,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 30%, rgba(37,99,235,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 70% 50% at 50% 100%, rgba(6,182,212,0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .grid-bg {
+            position: fixed; inset: 0; z-index: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 20px 40px;
+            display: flex; align-items: center; justify-content: space-between;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            background: rgba(3,7,18,0.6);
+        }
+
+        .nav-logo {
+            font-size: 22px; font-weight: 800;
+            background: linear-gradient(135deg, #a78bfa, #60a5fa);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a {
+            color: rgba(255,255,255,0.5); text-decoration: none;
+            font-size: 14px; font-weight: 500; transition: color 0.2s;
+        }
+        .nav-links a:hover { color: white; }
+
+        .nav-cta {
+            padding: 10px 24px;
+            background: linear-gradient(135deg, var(--purple), var(--blue));
+            border: none; border-radius: 50px;
+            color: white; font-size: 14px; font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer; transition: all 0.3s;
+            text-decoration: none;
+        }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(124,58,237,0.4); }
+
+        /* ── SECTIONS ── */
+        section { position: relative; z-index: 1; }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-align: center;
+            padding: 120px 20px 80px;
+        }
+
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(124,58,237,0.15);
+            border: 1px solid rgba(124,58,237,0.3);
+            border-radius: 50px; padding: 8px 20px;
+            font-size: 13px; color: #a78bfa;
+            margin-bottom: 32px;
+            animation: fadeUp 0.6s ease both;
+        }
+
+        .hero-badge span { 
+            width: 6px; height: 6px; background: #a78bfa;
+            border-radius: 50%; animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+        h1 {
+            font-size: clamp(42px, 7vw, 88px);
+            font-weight: 900; line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+            animation: fadeUp 0.6s 0.1s ease both;
+        }
+
+        .grad-text {
+            background: linear-gradient(135deg, #ffffff 0%, #a78bfa 40%, #60a5fa 70%, #34d399 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: clamp(16px, 2vw, 20px);
+            color: rgba(255,255,255,0.45);
+            max-width: 580px; line-height: 1.7;
+            margin-bottom: 48px;
+            animation: fadeUp 0.6s 0.2s ease both;
+        }
+
+        .hero-buttons {
+            display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+            margin-bottom: 80px;
+            animation: fadeUp 0.6s 0.3s ease both;
+        }
+
+        .btn-primary {
+            padding: 16px 36px;
+            background: linear-gradient(135deg, var(--purple), var(--blue));
+            border: none; border-radius: 50px;
+            color: white; font-size: 16px; font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer; transition: all 0.3s;
+            box-shadow: 0 0 0 1px rgba(124,58,237,0.3), 0 20px 40px rgba(124,58,237,0.3);
+            text-decoration: none; display: inline-block;
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 0 0 1px rgba(124,58,237,0.5), 0 25px 50px rgba(124,58,237,0.4); }
+
+        .btn-secondary {
+            padding: 16px 36px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            color: rgba(255,255,255,0.7); font-size: 16px; font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer; transition: all 0.3s;
+            text-decoration: none; display: inline-block;
+        }
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.3); color: white; background: rgba(255,255,255,0.05); }
+
+        /* Hero stats */
+        .hero-stats {
+            display: flex; gap: 48px; justify-content: center; flex-wrap: wrap;
+            animation: fadeUp 0.6s 0.4s ease both;
+        }
+
+        .hero-stat { text-align: center; }
+        .hero-stat-num {
+            font-size: 36px; font-weight: 800;
+            background: linear-gradient(135deg, #a78bfa, #60a5fa);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.35); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+
+        /* ── MARQUEE ── */
+        .marquee-section {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+            background: rgba(255,255,255,0.015);
+        }
+
+        .marquee-track {
+            display: flex; gap: 48px;
+            animation: marquee 20s linear infinite;
+            width: max-content;
+        }
+
+        .marquee-item {
+            display: flex; align-items: center; gap: 10px;
+            color: rgba(255,255,255,0.3); font-size: 14px; font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .marquee-item span { font-size: 20px; }
+
+        @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+        /* ── FEATURES ── */
+        .features { padding: 120px 20px; }
+
+        .section-label {
+            text-align: center;
+            font-size: 12px; font-weight: 600; letter-spacing: 4px;
+            text-transform: uppercase; color: #a78bfa;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(32px, 4vw, 52px);
+            font-weight: 800; letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .section-sub {
+            text-align: center;
+            color: rgba(255,255,255,0.4); font-size: 18px;
+            max-width: 500px; margin: 0 auto 72px;
+        }
+
+        .features-grid {
+            max-width: 1100px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px; padding: 32px;
+            transition: all 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(124,58,237,0.08), transparent);
+            opacity: 0; transition: opacity 0.3s;
+        }
+
+        .feature-card:hover { transform: translateY(-6px); border-color: rgba(124,58,237,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-icon {
+            width: 56px; height: 56px;
+            border-radius: 14px; font-size: 26px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+        .feature-card p { color: rgba(255,255,255,0.45); line-height: 1.7; font-size: 15px; }
+
+        .feature-tag {
+            display: inline-block; margin-top: 16px;
+            padding: 4px 12px;
+            border-radius: 50px; font-size: 11px; font-weight: 600;
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+
+        /* ── HOW IT WORKS ── */
+        .how { padding: 120px 20px; background: rgba(255,255,255,0.01); }
+
+        .steps {
+            max-width: 900px; margin: 0 auto;
+            display: flex; flex-direction: column; gap: 0;
+        }
+
+        .step {
+            display: flex; gap: 32px; align-items: flex-start;
+            padding: 40px 0; border-bottom: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .step:last-child { border-bottom: none; }
+        .step:hover .step-num { transform: scale(1.1); }
+
+        .step-num {
+            min-width: 56px; height: 56px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--purple), var(--blue));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; font-weight: 800;
+            transition: transform 0.3s;
+            box-shadow: 0 8px 24px rgba(124,58,237,0.3);
+        }
+
+        .step-content h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+        .step-content p { color: rgba(255,255,255,0.45); line-height: 1.7; font-size: 15px; }
+
+        /* ── LANGUAGES ── */
+        .languages { padding: 100px 20px; }
+
+        .lang-grid {
+            max-width: 800px; margin: 0 auto;
+            display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+        }
+
+        .lang-pill {
+            padding: 12px 24px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 50px; font-size: 15px;
+            transition: all 0.3s; cursor: default;
+        }
+        .lang-pill:hover {
+            background: rgba(124,58,237,0.15);
+            border-color: rgba(124,58,237,0.4);
+            transform: translateY(-2px);
+        }
+
+        /* ── PRICING ── */
+        .pricing { padding: 120px 20px; }
+
+        .pricing-grid {
+            max-width: 1000px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px; align-items: start;
+        }
+
+        .price-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px; padding: 36px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .price-card.popular {
+            border-color: rgba(124,58,237,0.5);
+            background: rgba(124,58,237,0.08);
+            transform: scale(1.03);
+        }
+
+        .popular-badge {
+            position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--purple), var(--blue));
+            padding: 6px 20px; border-radius: 50px;
+            font-size: 12px; font-weight: 700; letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .price-plan { font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
+        .price-amount { font-size: 52px; font-weight: 900; letter-spacing: -2px; margin-bottom: 4px; }
+        .price-amount span { font-size: 20px; font-weight: 400; color: rgba(255,255,255,0.4); }
+        .price-desc { color: rgba(255,255,255,0.4); font-size: 14px; margin-bottom: 28px; }
+
+        .price-features { list-style: none; margin-bottom: 32px; display: flex; flex-direction: column; gap: 12px; }
+        .price-features li { display: flex; align-items: center; gap: 10px; font-size: 15px; color: rgba(255,255,255,0.7); }
+        .price-features li::before { content: '✓'; color: #a78bfa; font-weight: 700; min-width: 16px; }
+
+        .price-btn {
+            width: 100%; padding: 14px;
+            border-radius: 12px; font-size: 15px; font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer; transition: all 0.3s; border: none;
+        }
+
+        .price-btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: rgba(255,255,255,0.7);
+        }
+        .price-btn-outline:hover { border-color: rgba(255,255,255,0.3); color: white; background: rgba(255,255,255,0.05); }
+
+        .price-btn-filled {
+            background: linear-gradient(135deg, var(--purple), var(--blue));
+            color: white;
+            box-shadow: 0 8px 24px rgba(124,58,237,0.3);
+        }
+        .price-btn-filled:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(124,58,237,0.4); }
+
+        /* ── CTA ── */
+        .cta-section {
+            padding: 120px 20px;
+            text-align: center;
+        }
+
+        .cta-box {
+            max-width: 700px; margin: 0 auto;
+            background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(37,99,235,0.1));
+            border: 1px solid rgba(124,58,237,0.25);
+            border-radius: 32px; padding: 72px 40px;
+            position: relative; overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(ellipse at center, rgba(124,58,237,0.1) 0%, transparent 60%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+        .cta-box h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 800; margin-bottom: 16px; position: relative; }
+        .cta-box p { color: rgba(255,255,255,0.45); font-size: 18px; margin-bottom: 40px; position: relative; }
+
+        .cta-input-row {
+            display: flex; gap: 12px; max-width: 480px; margin: 0 auto;
+            position: relative;
+        }
+
+        .cta-input {
+            flex: 1; padding: 16px 20px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; color: white;
+            font-size: 15px; font-family: 'Poppins', sans-serif;
+            outline: none; transition: all 0.3s;
+        }
+        .cta-input:focus { border-color: rgba(124,58,237,0.5); background: rgba(124,58,237,0.08); }
+        .cta-input::placeholder { color: rgba(255,255,255,0.25); }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 48px 40px;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 24px;
+            position: relative; z-index: 1;
+        }
+
+        .footer-logo { font-size: 18px; font-weight: 800; background: linear-gradient(135deg, #a78bfa, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .footer-copy { color: rgba(255,255,255,0.25); font-size: 13px; }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a { color: rgba(255,255,255,0.3); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+        .footer-links a:hover { color: white; }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0; transform: translateY(32px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── DEMO WIDGET ── */
+        .demo-section { padding: 80px 20px; }
+
+        .demo-box {
+            max-width: 700px; margin: 0 auto;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px; padding: 40px;
+            backdrop-filter: blur(20px);
+        }
+
+        .demo-input {
+            width: 100%; padding: 16px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; color: white;
+            font-size: 15px; font-family: 'Poppins', sans-serif;
+            outline: none; margin-bottom: 12px; transition: all 0.3s;
+        }
+        .demo-input:focus { border-color: rgba(124,58,237,0.5); }
+        .demo-input::placeholder { color: rgba(255,255,255,0.25); }
+
+        .demo-output {
+            margin-top: 20px; padding: 20px;
+            background: rgba(124,58,237,0.08);
+            border: 1px solid rgba(124,58,237,0.2);
+            border-radius: 12px;
+            color: rgba(255,255,255,0.8);
+            font-size: 14px; line-height: 1.8;
+            white-space: pre-wrap; min-height: 80px;
+            display: none;
+        }
+
+        /* scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.4); border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="bg-mesh"></div>
+    <div class="grid-bg"></div>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-logo">⚡ VyaparAI</div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#how">How it works</a>
+            <a href="#pricing">Pricing</a>
+        </div>
+        <a href="#cta" class="nav-cta">Start Free →</a>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-badge"><span></span> Now with 10+ Indian Languages</div>
+        <h1><span class="grad-text">AI Marketing</span><br>for Every Business</h1>
+        <p class="hero-sub">Generate captions, ads, emails, logos and full websites — in Marathi, Hindi, English and more. Built for India. Built for everyone.</p>
+        <div class="hero-buttons">
+            <a href="#cta" class="btn-primary">🚀 Start Free — No Card Needed</a>
+            <a href="#features" class="btn-secondary">See Features →</a>
+        </div>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-num">10+</div>
+                <div class="hero-stat-label">Languages</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-num">5</div>
+                <div class="hero-stat-label">Free Uses Daily</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-num">∞</div>
+                <div class="hero-stat-label">Possibilities</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-num">₹99</div>
+                <div class="hero-stat-label">Per Month</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <div class="marquee-item"><span>✍️</span> Social Media Captions</div>
+            <div class="marquee-item"><span>📧</span> Email Writing</div>
+            <div class="marquee-item"><span>🎨</span> Logo Generation</div>
+            <div class="marquee-item"><span>🌐</span> Website Builder</div>
+            <div class="marquee-item"><span>📱</span> WhatsApp Messages</div>
+            <div class="marquee-item"><span>📢</span> Ad Copy</div>
+            <div class="marquee-item"><span>🛍️</span> Product Descriptions</div>
+            <div class="marquee-item"><span>📊</span> Marketing Plans</div>
+            <div class="marquee-item"><span>✍️</span> Social Media Captions</div>
+            <div class="marquee-item"><span>📧</span> Email Writing</div>
+            <div class="marquee-item"><span>🎨</span> Logo Generation</div>
+            <div class="marquee-item"><span>🌐</span> Website Builder</div>
+            <div class="marquee-item"><span>📱</span> WhatsApp Messages</div>
+            <div class="marquee-item"><span>📢</span> Ad Copy</div>
+            <div class="marquee-item"><span>🛍️</span> Product Descriptions</div>
+            <div class="marquee-item"><span>📊</span> Marketing Plans</div>
+        </div>
+    </div>
+
+    <!-- FEATURES -->
+    <section class="features" id="features">
+        <div class="section-label">Everything You Need</div>
+        <h2 class="section-title">One tool. <span class="grad-text">Unlimited power.</span></h2>
+        <p class="section-sub">Everything a business needs to market itself — all in one place.</p>
+
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <div class="feature-icon" style="background:rgba(124,58,237,0.15)">✍️</div>
+                <h3>Caption Generator</h3>
+                <p>Generate powerful social media captions for Instagram, Facebook and WhatsApp in any Indian language instantly.</p>
+                <div class="feature-tag" style="background:rgba(124,58,237,0.15);color:#a78bfa">Most Popular</div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon" style="background:rgba(37,99,235,0.15)">🌐</div>
+                <h3>Website Builder</h3>
+                <p>Build beautiful websites for your business or your clients automatically using AI — no coding needed.</p>
+                <div class="feature-tag" style="background:rgba(37,99,235,0.15);color:#60a5fa">New</div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon" style="background:rgba(6,182,212,0.15)">🎨</div>
+                <h3>Logo & Graphics</h3>
+                <p>Generate professional logos, banners, and marketing graphics for any business in seconds.</p>
+                <div class="feature-tag" style="background:rgba(6,182,212,0.15);color:#06b6d4">Coming Soon</div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon" style="background:rgba(236,72,153,0.15)">📧</div>
+                <h3>Email & WhatsApp</h3>
+                <p>Write professional emails and WhatsApp messages that convert — in your customer's own language.</p>
+                <div class="feature-tag" style="background:rgba(236,72,153,0.15);color:#ec4899">Popular</div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon" style="background:rgba(52,211,153,0.15)">📢</div>
+                <h3>Ad Copy</h3>
+                <p>Create high-converting ad copy for Google, Facebook and Instagram campaigns in minutes.</p>
+                <div class="feature-tag" style="background:rgba(52,211,153,0.15);color:#34d399">Available</div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon" style="background:rgba(251,191,36,0.15)">📊</div>
+                <h3>Marketing Plans</h3>
+                <p>Get a complete 30-day marketing plan tailored specifically for your business and budget.</p>
+                <div class="feature-tag" style="background:rgba(251,191,36,0.15);color:#fbbf24">Pro</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how" id="how">
+        <div class="section-label">Simple Process</div>
+        <h2 class="section-title">Ready in <span class="grad-text">3 steps</span></h2>
+        <p class="section-sub">No technical knowledge needed. Anyone can use VyaparAI.</p>
+
+        <div class="steps">
+            <div class="step reveal">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h3>Enter your business details</h3>
+                    <p>Type your business name, what you sell, and choose your language. Takes less than 30 seconds.</p>
+                </div>
+            </div>
+            <div class="step reveal">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h3>AI generates your content</h3>
+                    <p>Our powerful AI creates professional captions, ads, emails and more — customized for your business instantly.</p>
+                </div>
+            </div>
+            <div class="step reveal">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h3>Copy, post and grow</h3>
+                    <p>Copy the content with one click and post it directly to your social media. Watch your business grow!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LANGUAGES -->
+    <section class="languages">
+        <div class="section-label">Language Support</div>
+        <h2 class="section-title">Your language, <span class="grad-text">your business</span></h2>
+        <p class="section-sub" style="margin-bottom:40px">We support every major Indian language so you can reach your customers in their own words.</p>
+        <div class="lang-grid">
+            <div class="lang-pill">🇮🇳 मराठी (Marathi)</div>
+            <div class="lang-pill">🇮🇳 हिंदी (Hindi)</div>
+            <div class="lang-pill">🇬🇧 English</div>
+            <div class="lang-pill">🇮🇳 বাংলা (Bengali)</div>
+            <div class="lang-pill">🇮🇳 తెలుగు (Telugu)</div>
+            <div class="lang-pill">🇮🇳 தமிழ் (Tamil)</div>
+            <div class="lang-pill">🇮🇳 ಕನ್ನಡ (Kannada)</div>
+            <div class="lang-pill">🇮🇳 ગુજરાતી (Gujarati)</div>
+            <div class="lang-pill">🇮🇳 ਪੰਜਾਬੀ (Punjabi)</div>
+            <div class="lang-pill">🇮🇳 + More</div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing" id="pricing">
+        <div class="section-label">Simple Pricing</div>
+        <h2 class="section-title">Start free, <span class="grad-text">scale when ready</span></h2>
+        <p class="section-sub">No hidden fees. Cancel anytime. Perfect for every business size.</p>
+
+        <div class="pricing-grid">
+            <div class="price-card reveal">
+                <div class="price-plan">Free Trial</div>
+                <div class="price-amount">₹0<span>/mo</span></div>
+                <div class="price-desc">Perfect to get started</div>
+                <ul class="price-features">
+                    <li>5 captions per day</li>
+                    <li>3 languages</li>
+                    <li>Basic templates</li>
+                    <li>WhatsApp & Instagram</li>
+                    <li style="opacity:0.3;text-decoration:line-through">Website builder</li>
+                    <li style="opacity:0.3;text-decoration:line-through">Logo generation</li>
+                </ul>
+                <button class="price-btn price-btn-outline">Start Free →</button>
+            </div>
+
+            <div class="price-card popular reveal">
+                <div class="popular-badge">⭐ MOST POPULAR</div>
+                <div class="price-plan">Pro</div>
+                <div class="price-amount">₹199<span>/mo</span></div>
+                <div class="price-desc">For growing businesses</div>
+                <ul class="price-features">
+                    <li>Unlimited captions</li>
+                    <li>10+ Indian languages</li>
+                    <li>All content types</li>
+                    <li>Website builder</li>
+                    <li>Logo generation</li>
+                    <li>Priority support</li>
+                </ul>
+                <button class="price-btn price-btn-filled">Get Pro →</button>
+            </div>
+
+            <div class="price-card reveal">
+                <div class="price-plan">Agency</div>
+                <div class="price-amount">₹999<span>/mo</span></div>
+                <div class="price-desc">For agencies & freelancers</div>
+                <ul class="price-features">
+                    <li>Everything in Pro</li>
+                    <li>10 client accounts</li>
+                    <li>White label option</li>
+                    <li>API access</li>
+                    <li>Custom branding</li>
+                    <li>Dedicated support</li>
+                </ul>
+                <button class="price-btn price-btn-outline">Contact Us →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="cta">
+        <div class="cta-box">
+            <h2>Ready to grow your<br><span class="grad-text">business with AI?</span></h2>
+            <p>Join thousands of Indian businesses already using VyaparAI. Start free today.</p>
+            <div class="cta-input-row">
+                <input type="email" class="cta-input" placeholder="Enter your email..." />
+                <button class="btn-primary" style="white-space:nowrap;padding:16px 24px">Start Free 🚀</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">⚡ VyaparAI</div>
+        <div class="footer-copy">© 2026 VyaparAI. Made with ❤️ in India</div>
+        <div class="footer-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Contact</a>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), i * 100);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
