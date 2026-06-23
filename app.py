@@ -5,7 +5,11 @@ from flask import Flask
 
 app = Flask(__name__)
 import os
-client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
+from google import genai
+
+client = genai.Client(
+    api_key=os.environ.get("GEMINI_API_KEY")
+)
 HTML = '''
 <!DOCTYPE html>
 <html lang="en">
@@ -504,5 +508,5 @@ def generate():
 import os
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
