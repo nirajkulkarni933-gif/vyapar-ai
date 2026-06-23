@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify, render_template_string
 from google import genai
 
+from flask import Flask
+
 app = Flask(__name__)
 import os
 client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
@@ -499,6 +501,8 @@ def generate():
         print(f"ERROR: {e}")
         return jsonify({"captions": str(e)})
 
-if __name__ == "__main__":
-    app.run(debug=True)
+import os
 
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
